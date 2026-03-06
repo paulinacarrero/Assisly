@@ -8,6 +8,7 @@ body{
     background-image: url("imagenes assisly/fondo.png");
     background-size: cover;
     background-position: center;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* cuadro blanco */
@@ -47,6 +48,7 @@ input{
     cursor:pointer;
     margin-top:15px;
 }
-body{
-    font-family: 'Poppins', sans-serif;
+#terminos{
+    display: flex;
+    flex-direction: row;
 }
