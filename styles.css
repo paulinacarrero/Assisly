@@ -44,9 +44,10 @@ input{
     padding:12px;
     border:none;
     border-radius:25px;
-    background:linear-gradient(to right,#8e8e8e,#dcdcdc);
+    background:linear-gradient(to right,#b1b7d3,#5344aa);
     cursor:pointer;
     margin-top:15px;
+    color: aliceblue;
 }
 .terminos{
     display: flex;
@@ -54,7 +55,7 @@ input{
     align-items: center;
     gap: 10px;
     margin-top: 15px;
-    text-align: center;
+    
 }
 
 .terminos input{
