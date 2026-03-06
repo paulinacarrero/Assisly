@@ -26,6 +26,12 @@ body{
     width:300px;
     margin-bottom:20px;
 }
+/* Id-facial */
+.id-facial{
+    width:250px;
+    margin-bottom:250px;
+    margin-top: 30px;
+}
 
 /* inputs */
 input{
@@ -49,6 +55,19 @@ input{
     margin-top:15px;
     color: aliceblue;
 }
+
+.btn-camara{
+    height: 45px;
+    width: 85%;
+    padding:12px ;
+    border: none;
+    border-radius: 25px;
+    background:linear-gradient(to right, #b1b7d3, #5344aa) ;
+    cursor:pointer;
+    margin: top 15px;
+    color: aliceblue;
+}
+
 .terminos{
     display: flex;
      justify-content: center; 
