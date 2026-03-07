@@ -31,8 +31,8 @@ body{
 .id-facial{
     width: 300px;
     margin-bottom:50px;
-    margin:60px;
-    margin-left:11%;
+    margin:30px;
+    margin-left:6%;
 }
 
 /* inputs */
@@ -100,11 +100,12 @@ input{
 .robot{
     display:flex;
     justify-content: center;
-    width:150%;
+    width:140%;
+    margin: 0px;
+    padding-left: 20%;
 }
 .cerrar {
- text-align: left;
- 
+ text-align: center; 
 }
 
 .btn-cerrar {
@@ -115,4 +116,5 @@ input{
     background:linear-gradient(to right,#b1b7d3,#5344aa);
     cursor:pointer;
     color: aliceblue;
+    margin-bottom:20px ;
 }
