@@ -16,17 +16,22 @@
 
     <!-- CÁMARA -->
     <div class="camara-box">
-        <video id="video" autoplay playsinline></video>
-        <img id="foto">
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <img id="foto">
     </div>
 
     <!-- BOTONES -->
     <button class="btn-camara" onclick="abrirCamara()">ABRIR CÁMARA</button>
     <button class="btn-foto" onclick="tomarFoto()">Tomar Foto</button>
 
+
+    <img id="imagenUsuario" />
+
 </div>
 
-<script src="tomarFoto.js"></script>
+<script src="registrarRostro.js"></script>
+<!-- <script src="tomarFoto.js"></script> -->
 
 </body>
 </html>
