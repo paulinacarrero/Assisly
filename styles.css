@@ -35,7 +35,7 @@ body{
     margin-left:6%;
 }
 
-/* inputs */
+/* registro */
 input{
     width:80%;
     text-align: center;
@@ -43,6 +43,7 @@ input{
     margin:10px;
     border-radius:25px;
     border:1px solid #ccc; 
+    
 }
 
 /* botón */
@@ -73,7 +74,7 @@ input{
 
 .terminos{
     display: flex;
-     justify-content: center; 
+    justify-content: center; 
     align-items: center;
     gap: 10px;
     margin-top: 15px;
@@ -91,7 +92,7 @@ input{
     font-size: 14px;
 }
 .QR {
- width:300px;
+width:300px;
     text-align: center;
     padding:12px;
     margin:10px 0;
@@ -105,7 +106,7 @@ input{
     padding-left: 20%;
 }
 .cerrar {
- text-align: center; 
+text-align: center; 
 }
 
 .btn-cerrar {
@@ -117,4 +118,64 @@ input{
     cursor:pointer;
     color: aliceblue;
     margin-bottom:20px ;
+}
+.titulo{
+/* tamaño de la letra */
+font-size: 35px;
+}
+/* icono ojo */
+.contraseña{
+    position: relative;
+    width: 80%;
+    margin: auto;
+    margin-right: 63px;
+    
+}
+
+.contraseña input{
+    width:100%;
+    text-align: center;
+    padding:12px;
+    margin:10px;
+    border-radius:25px;
+    border:1px solid #ccc; 
+    right:20px;
+}
+
+.contraseña i{
+    position: absolute;
+    right: 20px;
+    top: 40%;
+    cursor: pointer;
+    color: gray;
+}
+.btn-foto {
+    width: 30%;
+    border-radius:25px;
+    border:1px solid #d4d4d4; 
+    color:#000000;
+    margin:20px;
+    
+}
+.login-rostro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.camara-box {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 20px;
+    border-radius: 15px;
+    overflow: hidden; /* CLAVE: evita que se salga */
+    border-radius: 50%;
+    /* imagen de fondo */
+    background: url("imagenes assisly/id-facial.png") no-repeat center;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

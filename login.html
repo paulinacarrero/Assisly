@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assisly</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
-
+    
 <div class="login-container">
 
     <img src="imagenes assisly/logo.png" class="logo">
@@ -16,8 +19,11 @@
     <p>Inicia sesión para continuar</p>
     
 <form action="rostro.html" method="GET">
-    <input type="email" placeholder="Correo electrónico" required>
+    <input type="email" placeholder="Correo electrónico" required minlength="5">
+    <div class="contraseña">
     <input type="password" placeholder="Contraseña" required>
+    <i class="fa-solid fa-eye-slash"></i>
+    </div>
 
     <button type="submit" class="btn-login">
         INICIAR SESIÓN
@@ -25,8 +31,6 @@
 </form>
 
     <p>¿No tienes cuenta? <a href="registro.html">Registrarse</a></p>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-</div>
-
+</div> 
 </body>
 </html>

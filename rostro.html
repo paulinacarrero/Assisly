@@ -11,7 +11,35 @@
 <div class="login-container">
 
     <img src="imagenes assisly/logo.png" class="logo">
-    <p>Dale click en la cámara para tomar tu<br>asistencia a la clase de Ingenieria de Software</p>
-    <img src="imagenes assisly/id-facial.png" class="id-facial">
-    
-         <button class="btn-camara">ABRIR CÁMARA</button>
+    <p class="texto">
+        Dale click en la cámara para tomar tu asistencia a la clase de Ingeniería de Software
+    </p>
+
+    <!-- CONTENEDOR CÁMARA -->
+    <div class="camara-box">
+        <video id="video" autoplay playsinline></video>
+        <img id="foto">
+    </div>
+
+    <!-- BOTONES -->
+    <button class="btn-camara" onclick="abrirCamara()">ABRIR CÁMARA</button>
+    <button class="btn-foto" onclick="tomarFoto()">Tomar Foto</button>
+
+</div>
+        <!-- VIDEO -->
+<video id="video" autoplay playsinline style="display:none; width:100%; max-width:300px;"></video>
+
+    <!-- CANVAS OCULTO -->
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <!-- RESULTADO -->
+    <img id="foto">
+
+</div>
+
+<!-- JS SIEMPRE AL FINAL -->
+<script src="tomarFoto.js"></script>
+
+</body>
+</html>
+
