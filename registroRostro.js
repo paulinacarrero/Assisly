@@ -1,19 +1,22 @@
 function abrirCamara() {
-const video = document.getElementById("video");
-const foto = document.getElementById("foto");
+  const video = document.getElementById("video");
+  const foto = document.getElementById("foto");
+  const camaraBox = document.querySelector(".camara-box");
 
-foto.style.display = "none";
-video.style.display = "block";
+  // 🔥 agrandar el círculo
+  camaraBox.classList.add("camara-grande");
 
-navigator.mediaDevices.getUserMedia({ video: true })
+  foto.style.display = "none";
+  video.style.display = "block";
+
+  navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
-    video.srcObject = stream;
+      video.srcObject = stream;
     })
     .catch(error => {
-    alert("No se pudo acceder a la cámara");
+      alert("No se pudo acceder a la cámara");
     });
 }
-
 function tomarFoto() {
 const video = document.getElementById("video");
 const canvas = document.createElement("canvas");

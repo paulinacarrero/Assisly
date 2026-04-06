@@ -168,14 +168,20 @@ font-size: 35px;
     width: 220px;
     height: 220px;
     margin: 0 auto 20px;
-    border-radius: 15px;
-    overflow: hidden; /* CLAVE: evita que se salga */
     border-radius: 50%;
-    /* imagen de fondo */
+    overflow: hidden;
     background: url("imagenes assisly/id-facial.png") no-repeat center;
     background-size: cover;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    transition: 0.4s; /* 🔥 animación suave */
+}
+
+/* 🔥 cuando abre cámara */
+.camara-grande {
+    width: 300px;
+    height: 300px;
 }
