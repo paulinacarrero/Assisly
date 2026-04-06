@@ -11,7 +11,22 @@
 <div class="login-container">
 
     <img src="imagenes assisly/logo.png" class="logo">
-    <p>¡Ya casi terminas! Solo falta registrar tu <br>rostro 😊</p>
-    <img src="imagenes assisly/id-facial.png" class="id-facial">
-    
-<button class="btn-camara">ABRIR CÁMARA</button>
+
+    <p class="texto">¡Ya casi terminas! Solo falta registrar tu rostro 😊</p>
+
+    <!-- CÁMARA -->
+    <div class="camara-box">
+        <video id="video" autoplay playsinline></video>
+        <img id="foto">
+    </div>
+
+    <!-- BOTONES -->
+    <button class="btn-camara" onclick="abrirCamara()">ABRIR CÁMARA</button>
+    <button class="btn-foto" onclick="tomarFoto()">Tomar Foto</button>
+
+</div>
+
+<script src="tomarFoto.js"></script>
+
+</body>
+</html>
