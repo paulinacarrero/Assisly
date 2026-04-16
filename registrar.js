@@ -25,7 +25,8 @@ form.addEventListener("submit", async (e) => {
             body: JSON.stringify({
                 first_name,
                 last_name,
-                email
+                email,
+                password
             })
         });
 
