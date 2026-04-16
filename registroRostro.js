@@ -3,8 +3,9 @@ function abrirCamara() {
   const foto = document.getElementById("foto");
   const camaraBox = document.querySelector(".camara-box");
 
-  // 🔥 agrandar el círculo
+  // 🔥 animaciones
   camaraBox.classList.add("camara-grande");
+  camaraBox.classList.add("camara-activa");
 
   foto.style.display = "none";
   video.style.display = "block";
@@ -18,21 +19,26 @@ function abrirCamara() {
     });
 }
 function tomarFoto() {
-const video = document.getElementById("video");
-const canvas = document.createElement("canvas");
-const foto = document.getElementById("foto");
+  const video = document.getElementById("video");
+  const canvas = document.createElement("canvas");
+  const foto = document.getElementById("foto");
+  const camaraBox = document.querySelector(".camara-box");
 
-canvas.width = video.videoWidth;
-canvas.height = video.videoHeight;
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-const ctx = canvas.getContext("2d");
-ctx.drawImage(video, 0, 0);
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0);
 
-foto.src = canvas.toDataURL("image/png");
+  foto.src = canvas.toDataURL("image/png");
 
-foto.style.display = "block";
-video.style.display = "none";
+  foto.style.display = "block";
+  video.style.display = "none";
 
-const stream = video.srcObject;
-stream.getTracks().forEach(track => track.stop());
+  // 🔥 quitar animaciones
+  camaraBox.classList.remove("camara-activa");
+
+  // apagar cámara
+  const stream = video.srcObject;
+  stream.getTracks().forEach(track => track.stop());
 }

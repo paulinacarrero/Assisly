@@ -70,7 +70,7 @@ async function guardarRostro(imageData) {
 const studentID = localStorage.getItem("student_id");
 
 fetch(`http://localhost:3000/student/${studentID}`)
-  .then(res => res.json())
-  .then(data => {
+.then(res => res.json())
+.then(data => {
     document.getElementById("imagenUsuario").src = data.face_image_path;
-  });
+});
