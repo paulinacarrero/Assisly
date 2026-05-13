@@ -17,17 +17,17 @@ form.addEventListener("submit", async (e) => {
     const last_name = nombreSplit.slice(1).join(" ") || "";
 
     try {
-        const res = await fetch("http://localhost:3000/students", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                first_name,
-                last_name,
-                email,
-                password
-            })
+        const student_id = localStorage.getItem("student_id");
+
+        await fetch("http://localhost:3000/upload-face", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            student_id: Number(student_id), // 👈 importante convertir a número
+            face_image: imageBase64
+        })
         });
 
         const data = await res.json();

@@ -36,10 +36,16 @@ form.addEventListener("submit", async (e) => {
     }
 });
 
-const eyeIcon = document.querySelector(".fa-eye-slash");
+
+const eyeIcon = document.querySelector(".contraseña i");
 const passwordInput = document.querySelector('input[name="password"]');
 
+console.log("eyeIcon:", eyeIcon);       // ¿encuentra el elemento?
+console.log("passwordInput:", passwordInput); // ¿encuentra el input?
+
 eyeIcon.addEventListener("click", () => {
+    console.log("Click detectado"); // ¿se ejecuta al hacer click?
+    
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
         eyeIcon.classList.remove("fa-eye-slash");
