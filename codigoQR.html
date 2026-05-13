@@ -1,24 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assisly</title>
+    <title>Assisly - Asistencia</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- 1. Primero llamamos a la librería del QR (Internet necesario) -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 
-<div class="login-container">
-
+   <div class="login-container">
     <img src="imagenes assisly/logo.png" class="logo">
-
     <h2>¡Registra tu Asistencia!</h2>
     <p>Escanea el código QR para la asistencia a clases</p>
-    
-    <img src="imagenes assisly/QR.png" class="QR">
 
-  <button type="submit" class="btn-login">ESCANEAR CÓDIGO QR</button>
-</form>
+    <!-- Imagen que se quitará al dar clic -->
+    <img src="imagenes assisly/QR.png" class="QR" id="qr-decorativo">
+
+    <!-- Contenedor del escáner (inicialmente vacío) -->
+    <div id="reader" style="width: 100%; border-radius: 10px; overflow: hidden;"></div>
+
+    <button type="button" id="btn-scan" class="btn-login">ESCANEAR CÓDIGO QR</button>
+</div>
+    <!-- 2. AQUÍ LLAMAS A TU ARCHIVO JS -->
+    <!-- Asegúrate de que el nombre sea exactamente el mismo -->
+    <script src="codigoQR.js"></script>
 
 </body>
 </html>
