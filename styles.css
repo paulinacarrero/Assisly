@@ -145,10 +145,17 @@ font-size: 35px;
 .contraseña i{
     position: absolute;
     right: 20px;
-    top: 40%;
+    top: 30%;
     cursor: pointer;
     color: gray;
 }
+.contraseña{
+    position: relative;
+    width: 80%;
+    margin: auto;
+    margin-right: 63px;
+}
+
 .btn-foto {
     width: 30%;
     border-radius:25px;
@@ -209,4 +216,73 @@ font-size: 35px;
 }
 .camara-grande {
     box-shadow: 0 0 20px #00ffcc;
+}
+/* Contenedor de cada línea del formulario para que todo mida lo mismo */
+form #registroForm, .contraseña, input:not([type="checkbox"]) {
+    width: 100%;
+    max-width: 320px; /* Ajusta este ancho a tu gusto */
+    margin: 10px auto;
+    box-sizing: border-box;
+}
+
+/* Estilo general para todos los campos de texto */
+input:not([type="checkbox"]) {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Ajuste específico para el contenedor del ojo */
+.contraseña {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contraseña input {
+    width: 100%;
+    margin: 0; /* Quitamos el margen extra aquí para que no se desfase */
+    padding-right: 45px; /* Espacio para que el texto no toque el ojo */
+}
+
+.contraseña i {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    color: #666;
+    z-index: 5;
+}
+.seccion-terminos {
+    text-align: left;
+    margin: 20px 0;
+    padding: 0 10px;
+}
+
+.nota-informativa {
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+.cuadro-legal {
+    background: #f4f4f9;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #000000;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.cuadro-legal ul {
+    margin-top: 8px;
+    padding-left: 20px;
+}
+
+.cuadro-legal li {
+    margin-bottom: 5px;
 }
