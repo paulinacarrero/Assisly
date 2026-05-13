@@ -8,6 +8,28 @@
 
     <!-- icono del ojo-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* Solo añadimos esto para que las opciones se vean en línea como en tu imagen */
+        .opciones-roles {
+            padding-left: 70px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+            
+            color: rgb(0, 0, 0); /* Para que el texto sea visible sobre tu fondo oscuro */
+            font-size: 14px;
+        }
+        .opciones-roles label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .opciones-roles input {
+            margin-right: 5px;
+            accent-color: #a100ff; /* Esto da el color púrpura de la imagen al circulito */
+        }
+    </style>
 </head>
 <body>
     
@@ -27,12 +49,19 @@
          <i class="fa-solid fa-eye-slash"></i>
     </div>
 
+        <!-- LAS TRES OPCIONES SOLICITADAS -->
+        <div class="opciones-roles">
+            <label><input type="radio" name="rol" value="estudiante" checked> Estudiante</label>
+            <label><input type="radio" name="rol" value="docente"> Docente/Administrativo</label>
+        </div>
+
         <button type="submit" class="btn-login">
             INICIAR SESIÓN
         </button>
     </form>
 
     <p>¿No tienes cuenta? <a href="registro.html">Registrarse</a></p>
+    
 </div> 
 
 <script src="login.js"></script>

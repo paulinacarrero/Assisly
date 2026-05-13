@@ -9,7 +9,7 @@ btnLogout.addEventListener('click', () => {
 
     // 3. Redirigir a la página de inicio de sesión o bienvenida
     // Cambia "index.html" por el nombre de tu página principal
-    window.location.href = "index.html"; 
+    window.location.href = "login.html"; 
     
     // 4. Evitar que el usuario pueda darle "Atrás" y volver a ver sus datos
     window.history.replaceState(null, null, window.location.href);
