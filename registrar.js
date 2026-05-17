@@ -84,3 +84,26 @@ checkbox.addEventListener('change', function() {
     // Si el checkbox está marcado, habilitamos el botón
     btnSiguiente.disabled = !this.checked;
 });
+
+const linkTerminos = document.getElementById('link-terminos');
+const cuadroLegal = document.getElementById('cuadro-legal');
+const checkTerminos = document.getElementById('check-terminos');
+
+linkTerminos.addEventListener('click', function(e) {
+    e.preventDefault(); // Evita que el enlace navegue
+
+    const estaVisible = cuadroLegal.style.display === 'block';
+
+    if (estaVisible) {
+        cuadroLegal.style.display = 'none';
+    } else {
+        cuadroLegal.style.display = 'block';
+    }
+});
+
+// Opcional: cerrar el cuadro si el usuario desmarca el checkbox
+checkTerminos.addEventListener('change', function() {
+    if (!this.checked) {
+        cuadroLegal.style.display = 'none';
+    }
+});

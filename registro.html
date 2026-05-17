@@ -31,9 +31,10 @@
 </div>
     
 <div class="seccion-terminos">
-    <p class="nota-informativa">Para continuar con tu registro en <strong>Assisly</strong>, es necesario que aceptes nuestras políticas de uso de datos:</p>
-    
-    <div class="cuadro-legal">
+    <p class="nota-informativa">Para continuar con tu registro en <strong>Assisly</strong>, es necesario que aceptes nuestras políticas de uso de datos.</p>
+
+    <!-- Cuadro legal oculto por defecto -->
+    <div class="cuadro-legal" id="cuadro-legal" style="display:none;">
         <p>Al marcar la casilla, usted autoriza a la plataforma para:</p>
         <ul>
             <li>Acceder a la cámara del dispositivo para el reconocimiento facial y toma de asistencia.</li>
@@ -44,9 +45,13 @@
 
     <div class="terminos">
         <input type="checkbox" id="check-terminos">
-        <label for="check-terminos">Acepto los términos y condiciones.</label>
+        <label for="check-terminos">
+            Acepto los 
+            <a href="#" id="link-terminos">términos y condiciones</a>.
+        </label>
     </div>
 </div>
+
 
     <button type="submit" class="btn-login">REGISTRARME</button>
 
