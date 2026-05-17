@@ -36,7 +36,6 @@ form.addEventListener("submit", async (e) => {
     }
 });
 
-
 const eyeIcon = document.querySelector(".contraseña i");
 const passwordInput = document.querySelector('input[name="password"]');
 

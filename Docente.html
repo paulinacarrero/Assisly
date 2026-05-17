@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assisly - Panel Docente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("imagenes assisly/fondo.png");
+    background-size: cover;
+    background-position: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+        .panel-container {
+            background: #fff;
+            border-radius: 24px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(102, 51, 153, 0.25);
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.5s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .header { text-align: center; margin-bottom: 28px; }
+        .logo { height: 70px; margin-bottom: 8px; }
+
+        .badge-docente {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .header h2 { font-size: 22px; font-weight: 700; color: #1e1e2e; }
+        .header p  { font-size: 14px; color: #6b7280; margin-top: 4px; }
+
+        .docente-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            border: 1px solid #ddd6fe;
+        }
+
+        .avatar {
+            width: 46px; height: 46px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 18px; flex-shrink: 0;
+        }
+
+        .docente-nombre { font-weight: 700; font-size: 15px; color: #1e1e2e; }
+        .docente-cargo  { font-size: 12px; color: #7c3aed; font-weight: 500; }
+
+        .seccion-label {
+            font-size: 13px; font-weight: 600; color: #374151;
+            margin-bottom: 8px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .seccion-label i { color: #7c3aed; }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #374151;
+            background: #fafafa;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            margin-bottom: 16px;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237c3aed' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            cursor: pointer;
+        }
+
+        select:focus, input[type="text"]:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+            background: #fff;
+        }
+
+        .btn-generar {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; border-radius: 14px;
+            font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            margin-top: 4px;
+        }
+        .btn-generar:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(118,75,162,0.35); }
+        .btn-generar:active { transform: translateY(0); }
+
+        .qr-panel { display: none; margin-top: 28px; text-align: center; animation: fadeUp 0.4s ease; }
+        .qr-panel.visible { display: block; }
+
+        .qr-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .qr-divider::before, .qr-divider::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+        .qr-divider span { font-size: 12px; color: #9ca3af; font-weight: 500; white-space: nowrap; }
+
+        .qr-info-card {
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+            border: 1px solid #ddd6fe;
+            border-radius: 16px; padding: 20px; margin-bottom: 16px;
+        }
+
+        .qr-titulo-clase { font-size: 16px; font-weight: 700; color: #1e1e2e; margin-bottom: 4px; }
+        .qr-detalle      { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+
+        .qr-wrapper {
+            display: inline-block; background: white;
+            padding: 14px; border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        #qrcode canvas, #qrcode img { display: block; }
+
+        .timer-container {
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px; margin-top: 14px;
+        }
+
+        .timer-circle { width: 54px; height: 54px; position: relative; }
+        .timer-circle svg { transform: rotate(-90deg); }
+        .timer-circle .track  { fill: none; stroke: #e5e7eb; stroke-width: 4; }
+        .timer-circle .progress {
+            fill: none; stroke: #7c3aed; stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 113; stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+        .timer-num {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; color: #7c3aed;
+        }
+        .timer-texto { font-size: 13px; color: #6b7280; }
+        .timer-texto strong { color: #7c3aed; }
+
+        .acciones-qr { display: flex; gap: 10px; margin-top: 16px; }
+
+        .btn-accion {
+            flex: 1; padding: 11px; border-radius: 12px;
+            border: 1.5px solid #e5e7eb; background: white;
+            font-size: 13px; font-weight: 600; color: #374151;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-accion:hover        { border-color: #7c3aed; color: #7c3aed; background: #f5f3ff; }
+        .btn-accion.peligro:hover{ border-color: #ef4444; color: #ef4444; background: #fef2f2; }
+
+        .cerrar-sesion { margin-top: 24px; text-align: center; }
+        .cerrar-sesion a {
+            font-size: 13px; color: #9ca3af; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 5px;
+            transition: color 0.2s;
+        }
+        .cerrar-sesion a:hover { color: #ef4444; }
+
+        .estado-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 12px; font-weight: 600;
+            padding: 3px 10px; border-radius: 20px; margin-left: auto;
+        }
+        .estado-badge.activo { background: #dcfce7; color: #16a34a; }
+        .estado-badge .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: currentColor; animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="panel-container">
+
+    <div class="header">
+       <img src="imagenes assisly/logo.png" class="logo">
+        <div class="badge-docente">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            Panel Docente
+        </div>
+        <h2>Gestión de Asistencia</h2>
+        <p>Genera el código QR para tu clase</p>
+    </div>
+
+    <div class="docente-info">
+        <div class="avatar">
+            <i class="fa-solid fa-user-tie"></i>
+        </div>
+        <div>
+            <div class="docente-nombre" id="nombre-docente">Cargando...</div>
+            <div class="docente-cargo">Docente / Administrativo</div>
+        </div>
+        <span class="estado-badge activo">
+            <span class="dot"></span>
+            En línea
+        </span>
+    </div>
+
+    <div>
+       <p class="seccion-label"><i class="fa-solid fa-book"></i> Materia / Clase</p>
+<select id="materia">
+    <option value="" disabled selected>Selecciona la materia</option>
+    <option value="Ingenieria de Software 1">Ingenieria de Software 1</option>
+    <option value="Ingenieria de Software 2">Ingenieria de Software 2</option>
+    <option value="Base de Datos">Base de Datos</option>
+    <option value="Telecomunicaciones">Telecomunicaciones</option>
+</select>
+
+        <p class="seccion-label"><i class="fa-solid fa-clock"></i> Hora de clase</p>
+        <input type="text" id="hora" placeholder="Ej: 8:00 AM">
+
+        <p class="seccion-label"><i class="fa-solid fa-map-marker-alt"></i> Aula / Salón</p>
+        <input type="text" id="aula" placeholder="Ej: Salón 201">
+
+        <button class="btn-generar" onclick="generarQR()">
+            <i class="fa-solid fa-qrcode"></i>
+            GENERAR CÓDIGO QR
+        </button>
+    </div>
+
+    <div class="qr-panel" id="qr-panel">
+        <div class="qr-divider"><span>Código QR generado</span></div>
+
+        <div class="qr-info-card">
+            <div class="qr-titulo-clase" id="qr-clase-titulo">—</div>
+            <div class="qr-detalle" id="qr-clase-detalle">—</div>
+
+            <div class="qr-wrapper">
+                <div id="qrcode"></div>
+            </div>
+
+            <div class="timer-container">
+                <div class="timer-circle">
+                    <svg width="54" height="54" viewBox="0 0 42 42">
+                        <circle class="track" cx="21" cy="21" r="18"/>
+                        <circle class="progress" id="timer-arc" cx="21" cy="21" r="18"/>
+                    </svg>
+                    <div class="timer-num" id="timer-num">5:00</div>
+                </div>
+                <div class="timer-texto">
+                    El QR expira en <strong id="timer-texto">5:00</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="acciones-qr">
+            <button class="btn-accion" onclick="regenerarQR()">
+                <i class="fa-solid fa-rotate"></i>
+                Renovar QR
+            </button>
+            <button class="btn-accion peligro" onclick="cerrarQR()">
+                <i class="fa-solid fa-stop-circle"></i>
+                Cerrar clase
+            </button>
+        </div>
+    </div>
+
+    <div class="cerrar-sesion">
+        <a href="login.html">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Cerrar sesión
+        </a>
+    </div>
+
+</div>
+
+<script src="docente.js"></script>
+
+</body>
+</html>
