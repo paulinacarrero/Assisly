@@ -1,7 +1,42 @@
 const form = document.getElementById("registroForm");
+// ─────────────────────────────────────────
+//  registrar.js  –  Assisly Registro
+// ─────────────────────────────────────────
 
-// 2. Lógica de registro
-form.addEventListener("submit", async (e) => {
+// ── 1. Mostrar / ocultar contraseña ──────
+document.querySelectorAll('.contraseña').forEach(container => {
+    const icono = container.querySelector('i');
+    const input = container.querySelector('input');
+
+    icono.addEventListener('click', () => {
+        input.type = input.type === 'password' ? 'text' : 'password';
+        icono.classList.toggle('fa-eye');
+        icono.classList.toggle('fa-eye-slash');
+    });
+});
+
+// ── 2. Modal de términos y condiciones ───
+document.getElementById('link-terminos').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('modal-terminos').style.display = 'block';
+});
+
+// Cerrar al hacer clic en el fondo oscuro
+document.getElementById('modal-terminos').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+});
+
+function cerrarModal() {
+    document.getElementById('modal-terminos').style.display = 'none';
+}
+
+function aceptarTerminos() {
+    document.getElementById('check-terminos').checked = true;
+    cerrarModal();
+}
+
+// ── 3. Envío del formulario de registro ──
+document.getElementById('registroForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const nombre = form.nombre.value;
@@ -9,14 +44,22 @@ form.addEventListener("submit", async (e) => {
     const password = form.registro_c.value; // Nombre exacto de tu HTML
     const confirmPassword = form.confirmar_c.value;
 
-    if (password !== confirmPassword) {
-        alert("Las contraseñas no coinciden");
+    // Validar que aceptó los términos
+    if (!document.getElementById('check-terminos').checked) {
+        alert('Debes aceptar los términos y condiciones.');
         return;
     }
 
-    const nombreSplit = nombre.split(" ");
-    const first_name = nombreSplit[0];
-    const last_name = nombreSplit.slice(1).join(" ") || "";
+    // Validar contraseñas iguales
+    if (password !== confirmar) {
+        alert('Las contraseñas no coinciden.');
+        return;
+    }
+
+    // Separar nombre y apellido
+    const partes     = nombre.split(' ');
+    const first_name = partes[0];
+    const last_name  = partes.slice(1).join(' ') || '';
 
 
 try {

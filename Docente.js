@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────
  
 // ── Constante de duración del QR (segundos) ──
-const DURACION = 300; // 5 minutos
+const DURACION = 120; // 2 minutos
  
 let timerInterval   = null;
 let tiempoRestante  = DURACION;
