@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assisly</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- icono del ojo -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -14,52 +13,83 @@
 
     <img src="imagenes assisly/logo.png" class="logo">
     <h2>Crea tu cuenta</h2>
-    <p> Completa el formulario para registrate</p>
+    <p>Completa el formulario para registrate</p>
 
     <form id="registroForm">
 
-    <input type="text" name="nombre" placeholder="Nombre Completo" required>
-    <input type="email" name="email" placeholder="Correo Electronico" required>
-    <div class="contraseña">
-    <input type="password" name="registro_c" placeholder="Contraseña" required>
-    <i class="fa-solid fa-eye-slash toggle-password" style="cursor: pointer;"></i>
-</div>
+        <input type="text" name="nombre" placeholder="Nombre Completo" required>
+        <input type="email" name="email" placeholder="Correo Electronico" required>
 
-<div class="contraseña">
-    <input type="password" name="confirmar_c" placeholder="Confirmar Contraseña" required>
-    <i class="fa-solid fa-eye-slash toggle-password" style="cursor: pointer;"></i>
-</div>
-    
-<div class="seccion-terminos">
-    <p class="nota-informativa">Para continuar con tu registro en <strong>Assisly</strong>, es necesario que aceptes nuestras políticas de uso de datos.</p>
+        <div class="contraseña">
+            <input type="password" name="registro_c" placeholder="Contraseña" required>
+            <i class="fa-solid fa-eye-slash" style="cursor:pointer;"></i>
+        </div>
 
-    <!-- Cuadro legal oculto por defecto -->
-    <div class="cuadro-legal" id="cuadro-legal" style="display:none;">
-        <p>Al marcar la casilla, usted autoriza a la plataforma para:</p>
-        <ul>
-            <li>Acceder a la cámara del dispositivo para el reconocimiento facial y toma de asistencia.</li>
-            <li>Obtener su geolocalización exacta al momento de registrar la entrada/salida.</li>
-            <li>Almacenar y procesar sus datos biométricos con fines exclusivamente académicos.</li>
-        </ul>
-    </div>
+        <div class="contraseña">
+            <input type="password" name="confirmar_c" placeholder="Confirmar Contraseña" required>
+            <i class="fa-solid fa-eye-slash" style="cursor:pointer;"></i>
+        </div>
 
-    <div class="terminos">
-        <input type="checkbox" id="check-terminos">
-        <label for="check-terminos">
-            Acepto los 
-            <a href="#" id="link-terminos">términos y condiciones</a>.
-        </label>
-    </div>
-</div>
+        <div class="terminos">
+            <input type="checkbox" id="check-terminos">
+            <label for="check-terminos">
+                Acepto los <a href="#" id="link-terminos">términos y condiciones</a>.
+            </label>
+        </div>
 
+        <button type="submit" class="btn-login">REGISTRARME</button>
 
-    <button type="submit" class="btn-login">REGISTRARME</button>
+    </form>
 
-</form>
     <p>¿Ya tienes cuenta? <a href="login.html">Inicio sesión</a></p>
+
 </div>
+
+<!-- Modal FUERA del form y del login-container -->
+<div id="modal-terminos" style="display:none; position:fixed; inset:0;
+     background:rgba(0,0,0,0.5); z-index:999;">
+    <div style="display:flex; justify-content:center; align-items:center;
+                width:100%; height:100%;">
+        <div style="background:white; border-radius:16px; padding:30px;
+                    max-width:420px; width:90%;
+                    box-shadow:0 10px 40px rgba(0,0,0,0.2);
+                    position:relative;">
+
+            <!-- X para cerrar -->
+            <button type="button" onclick="cerrarModal()"
+                    style="position:absolute; top:12px; right:16px;
+                           background:none; border:none; font-size:20px;
+                           cursor:pointer; color:#9ca3af;">✕</button>
+
+            <h3 style="margin-bottom:12px; color:#1e1e2e;">Términos y Condiciones</h3>
+            <p style="font-size:13px; color:#374151; margin-bottom:10px;">
+                Al marcar la casilla, usted autoriza a la plataforma para:
+            </p>
+            <ul style="font-size:13px; color:#374151; padding-left:20px; margin-bottom:20px;">
+                <li style="margin-bottom:6px;">Acceder a la cámara del dispositivo para el reconocimiento facial y toma de asistencia.</li>
+                <li style="margin-bottom:6px;">Obtener su geolocalización exacta al momento de registrar la entrada/salida.</li>
+                <li>Almacenar y procesar sus datos biométricos con fines exclusivamente académicos.</li>
+            </ul>
+
+            <div style="display:flex; gap:10px;">
+                <button type="button" onclick="cerrarModal()"
+                        style="flex:1; padding:12px; border:1.5px solid #ccc;
+                               border-radius:25px; background:white; color:#374151;
+                               font-size:14px; font-weight:600; cursor:pointer;">
+                    CANCELAR
+                </button>
+                <button type="button" onclick="aceptarTerminos()"
+                        style="flex:1; padding:12px; border:none; border-radius:25px;
+                               background:linear-gradient(to right,#b1b7d3,#5344aa);
+                               color:white; font-size:14px; font-weight:600; cursor:pointer;">
+                    ACEPTAR
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script src="registrar.js"></script>
-
-
 </body>
 </html>

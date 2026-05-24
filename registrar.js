@@ -1,109 +1,89 @@
-const form = document.getElementById("registroForm");
-const eyeIcon = document.querySelector(".contraseña i"); // Selector más específico
-const passwordInput = document.querySelector('input[name="resgistro_c"]');
+// ─────────────────────────────────────────
+//  registrar.js  –  Assisly Registro
+// ─────────────────────────────────────────
 
-// 1. Lógica para ver/ocultar contraseña
-eyeIcon.addEventListener("click", () => {
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
-    } else {
-        passwordInput.type = "password";
-        eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
-    }
+// ── 1. Mostrar / ocultar contraseña ──────
+document.querySelectorAll('.contraseña').forEach(container => {
+    const icono = container.querySelector('i');
+    const input = container.querySelector('input');
+
+    icono.addEventListener('click', () => {
+        input.type = input.type === 'password' ? 'text' : 'password';
+        icono.classList.toggle('fa-eye');
+        icono.classList.toggle('fa-eye-slash');
+    });
 });
 
-// 2. Lógica de registro
-form.addEventListener("submit", async (e) => {
+// ── 2. Modal de términos y condiciones ───
+document.getElementById('link-terminos').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('modal-terminos').style.display = 'block';
+});
+
+// Cerrar al hacer clic en el fondo oscuro
+document.getElementById('modal-terminos').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+});
+
+function cerrarModal() {
+    document.getElementById('modal-terminos').style.display = 'none';
+}
+
+function aceptarTerminos() {
+    document.getElementById('check-terminos').checked = true;
+    cerrarModal();
+}
+
+// ── 3. Envío del formulario de registro ──
+document.getElementById('registroForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const nombre = form.nombre.value;
-    const email = form.email.value;
-    const password = form.resgistro_c.value; // Nombre exacto de tu HTML
-    const confirmPassword = form.confirmPassword.value;
+    const form      = e.target;
+    const nombre    = form.nombre.value.trim();
+    const email     = form.email.value.trim();
+    const password  = form.registro_c.value;
+    const confirmar = form.confirmar_c.value;
 
-    if (password !== confirmPassword) {
-        alert("Las contraseñas no coinciden");
+    // Validar que aceptó los términos
+    if (!document.getElementById('check-terminos').checked) {
+        alert('Debes aceptar los términos y condiciones.');
         return;
     }
 
-    const nombreSplit = nombre.split(" ");
-    const first_name = nombreSplit[0];
-    const last_name = nombreSplit.slice(1).join(" ") || "";
+    // Validar contraseñas iguales
+    if (password !== confirmar) {
+        alert('Las contraseñas no coinciden.');
+        return;
+    }
+
+    // Separar nombre y apellido
+    const partes     = nombre.split(' ');
+    const first_name = partes[0];
+    const last_name  = partes.slice(1).join(' ') || '';
 
     try {
-        const student_id = localStorage.getItem("student_id");
-
-        await fetch("http://localhost:3000/upload-face", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            student_id: Number(student_id), // 👈 importante convertir a número
-            face_image: imageBase64
-        })
+        const res = await fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ first_name, last_name, email, password })
         });
 
-        if (!res.ok) throw new Error("Error en el servidor");
+        if (!res.ok) {
+            const data = await res.json();
+            alert(data.error || 'Error en el servidor');
+            return;
+        }
 
         const data = await res.json();
-        
-        // Guardamos el ID del usuario para la siguiente fase
-        localStorage.setItem("student_id", data.id);
 
-        // Redirección al registro de rostro
-        window.location.href = "registroRostro.html";
+        // Guardar ID para la siguiente fase (registro de rostro)
+        localStorage.setItem('student_id', data.id);
+
+        // Redirigir al registro de rostro
+        window.location.href = 'registroRostro.html';
 
     } catch (error) {
         console.error(error);
-        alert("Error al registrar: " + error.message);
-    }
-});
-// Seleccionamos todos los contenedores de contraseña
-const containers = document.querySelectorAll('.contraseña');
-
-containers.forEach(container => {
-    const eyeIcon = container.querySelector('i');
-    const input = container.querySelector('input');
-
-    eyeIcon.addEventListener('click', () => {
-        // Cambiar tipo de input
-        const type = input.type === "password" ? "text" : "password";
-        input.type = type;
-
-        // Cambiar icono
-        eyeIcon.classList.toggle('fa-eye');
-        eyeIcon.classList.toggle('fa-eye-slash');
-    });
-});
-const checkbox = document.getElementById('check-terminos');
-const btnSiguiente = document.getElementById('btn-siguiente');
-
-checkbox.addEventListener('change', function() {
-    // Si el checkbox está marcado, habilitamos el botón
-    btnSiguiente.disabled = !this.checked;
-});
-
-const linkTerminos = document.getElementById('link-terminos');
-const cuadroLegal = document.getElementById('cuadro-legal');
-const checkTerminos = document.getElementById('check-terminos');
-
-linkTerminos.addEventListener('click', function(e) {
-    e.preventDefault(); // Evita que el enlace navegue
-
-    const estaVisible = cuadroLegal.style.display === 'block';
-
-    if (estaVisible) {
-        cuadroLegal.style.display = 'none';
-    } else {
-        cuadroLegal.style.display = 'block';
-    }
-});
-
-// Opcional: cerrar el cuadro si el usuario desmarca el checkbox
-checkTerminos.addEventListener('change', function() {
-    if (!this.checked) {
-        cuadroLegal.style.display = 'none';
+        alert('Error al conectar con el servidor.');
     }
 });
