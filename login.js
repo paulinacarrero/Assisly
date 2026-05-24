@@ -25,11 +25,84 @@ form.addEventListener("submit", async (e) => {
         // 🔥 Guardar sesión
         localStorage.setItem("student_id", data.student_id);
 
-        alert("Login exitoso 🎉");
+const universidadLat = 6.262199039902538;
+const universidadLon = -75.58890295150286;
 
-        // Redirección
-        window.location.href = "rostro.html";
+const RADIO_PERMITIDO = 100;
 
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+
+    const R = 6371e3;
+
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+}
+
+if (!navigator.geolocation) {
+
+    alert("Tu navegador no soporta geolocalización");
+    return;
+
+}
+
+navigator.geolocation.getCurrentPosition(
+
+    (position) => {
+
+        const usuarioLat = position.coords.latitude;
+        const usuarioLon = position.coords.longitude;
+
+        const distancia = calcularDistancia(
+            usuarioLat,
+            usuarioLon,
+            universidadLat,
+            universidadLon
+        );
+
+        console.log("Distancia:", distancia);
+
+        if (distancia <= RADIO_PERMITIDO) {
+
+            alert("📍Estás dentro de la universidad");
+
+            // REDIRECCIÓN
+            window.location.href = "rostro.html";
+
+        } else {
+
+            alert("Debes estar dentro de la universidad para tomar tu asistencia");
+
+        }
+
+    },
+
+    (error) => {
+
+        console.log(error);
+
+        alert("Debes permitir la ubicación");
+
+    },
+
+    {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+    }
+
+);
     } catch (error) {
         console.error(error);
         alert("Error conectando con el servidor");

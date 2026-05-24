@@ -43,10 +43,9 @@
     <form id="loginForm">
         <input type="email" name="email" placeholder="Correo electrónico" required minlength="5">
 
-       
     <div class="contraseña">
         <input type="password" name="password" placeholder="Contraseña" required>
-         <i class="fa-solid fa-eye-slash"></i>
+        <i class="fa-solid fa-eye-slash"></i>
     </div>
 
         <!-- LAS TRES OPCIONES SOLICITADAS -->
@@ -61,8 +60,112 @@
     </form>
 
     <p>¿No tienes cuenta? <a href="registro.html">Registrarse</a></p>
+<div id="estado"></div>
+
+
     
 </div> 
+<p id="estado" style="margin-top: 15px; color: white;"></p>
+
+<script>
+
+const universidadLat = 6.262199039902538;
+const universidadLon = -75.58890295150286;
+
+const RADIO_PERMITIDO = 100;
+
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+
+    const R = 6371e3;
+
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+}
+
+document.querySelector(".btn-login").addEventListener("click", (e) => {
+
+    e.preventDefault();
+
+    const estado = document.getElementById("estado");
+
+    if (!navigator.geolocation) {
+
+        estado.innerHTML = "Tu navegador no soporta GPS";
+        return;
+
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        (position) => {
+
+            const usuarioLat = position.coords.latitude;
+            const usuarioLon = position.coords.longitude;
+
+            const distancia = calcularDistancia(
+                usuarioLat,
+                usuarioLon,
+                universidadLat,
+                universidadLon
+            );
+
+            console.log("Distancia:", distancia);
+
+            if (distancia <= RADIO_PERMITIDO) {
+
+                estado.innerHTML = `
+                    ✅ Estás dentro de la universidad
+                    <br>
+                    Distancia: ${distancia.toFixed(2)} metros
+                `;
+
+                alert("Asistencia permitida");
+
+            } else {
+
+                estado.innerHTML = `
+                    ❌ Debes estar dentro de la universidad
+                    <br>
+                    Distancia: ${distancia.toFixed(2)} metros
+                `;
+
+                alert("Acceso bloqueado");
+
+            }
+
+        },
+
+        (error) => {
+
+            console.log(error);
+
+            estado.innerHTML = "Debes permitir ubicación";
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+
+    );
+
+});
+
+</script>
 
 <script src="login.js"></script>
 </body>

@@ -1,17 +1,4 @@
 const form = document.getElementById("registroForm");
-const eyeIcon = document.querySelector(".contraseña i"); // Selector más específico
-const passwordInput = document.querySelector('input[name="resgistro_c"]');
-
-// 1. Lógica para ver/ocultar contraseña
-eyeIcon.addEventListener("click", () => {
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
-    } else {
-        passwordInput.type = "password";
-        eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
-    }
-});
 
 // 2. Lógica de registro
 form.addEventListener("submit", async (e) => {
@@ -19,8 +6,8 @@ form.addEventListener("submit", async (e) => {
 
     const nombre = form.nombre.value;
     const email = form.email.value;
-    const password = form.resgistro_c.value; // Nombre exacto de tu HTML
-    const confirmPassword = form.confirmPassword.value;
+    const password = form.registro_c.value; // Nombre exacto de tu HTML
+    const confirmPassword = form.confirmar_c.value;
 
     if (password !== confirmPassword) {
         alert("Las contraseñas no coinciden");
@@ -31,34 +18,43 @@ form.addEventListener("submit", async (e) => {
     const first_name = nombreSplit[0];
     const last_name = nombreSplit.slice(1).join(" ") || "";
 
-    try {
-        const student_id = localStorage.getItem("student_id");
 
-        await fetch("http://localhost:3000/upload-face", {
+try {
+
+    const res = await fetch("http://localhost:3000/students", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            student_id: Number(student_id), // 👈 importante convertir a número
-            face_image: imageBase64
+            first_name,
+            last_name,
+            email,
+            password
         })
-        });
+    });
 
-        if (!res.ok) throw new Error("Error en el servidor");
+    // Ver la respuesta real
+    const data = await res.json();
 
-        const data = await res.json();
-        
-        // Guardamos el ID del usuario para la siguiente fase
-        localStorage.setItem("student_id", data.id);
+    console.log("Respuesta backend:", data);
 
-        // Redirección al registro de rostro
-        window.location.href = "registroRostro.html";
-
-    } catch (error) {
-        console.error(error);
-        alert("Error al registrar: " + error.message);
+    if (!res.ok) {
+        throw new Error(data.mensaje || "Error en el servidor");
     }
+
+    localStorage.setItem("student_id", data.id);
+
+    alert("Registro exitoso");
+
+    window.location.href = "registroRostro.html";
+
+} catch (error) {
+    console.error(error);
+    alert("Error al registrar: " + error.message);
+}
+
+
 });
 // Seleccionamos todos los contenedores de contraseña
 const containers = document.querySelectorAll('.contraseña');
@@ -77,13 +73,13 @@ containers.forEach(container => {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
 });
-const checkbox = document.getElementById('check-terminos');
-const btnSiguiente = document.getElementById('btn-siguiente');
+// const checkbox = document.getElementById('check-terminos');
+// const btnSiguiente = document.getElementById('btn-siguiente');
 
-checkbox.addEventListener('change', function() {
-    // Si el checkbox está marcado, habilitamos el botón
-    btnSiguiente.disabled = !this.checked;
-});
+// checkbox.addEventListener('change', function() {
+//     // Si el checkbox está marcado, habilitamos el botón
+//     btnSiguiente.disabled = !this.checked;
+// });
 
 const linkTerminos = document.getElementById('link-terminos');
 const cuadroLegal = document.getElementById('cuadro-legal');

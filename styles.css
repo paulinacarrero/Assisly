@@ -1,6 +1,7 @@
 body{
     margin:0;
-    height:100vh;
+    min-height:100vh;
+
     display:flex;
     justify-content:center;
     align-items:center;
@@ -8,8 +9,11 @@ body{
     background-image: url("imagenes assisly/fondo.png");
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+
     font-family: 'Poppins', sans-serif;
 }
+
 
 /* cuadro blanco */
 .login-container{
@@ -19,6 +23,7 @@ body{
     border-radius:25px;
     text-align:center;
     box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    
 }
 
 /* logo */
@@ -285,4 +290,54 @@ input:not([type="checkbox"]) {
 
 .cuadro-legal li {
     margin-bottom: 5px;
+}
+#estado{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.mensaje-error{
+    background: rgba(255, 0, 0, 0.12);
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 14px;
+    border-radius: 12px;
+    width: 85%;
+    text-align: center;
+    font-size: 14px;
+    font-family: Arial;
+}
+
+.mensaje-success{
+    background: rgba(0, 255, 100, 0.12);
+    border: 1px solid #00ff99;
+    color: #00cc7a;
+    padding: 14px;
+    border-radius: 12px;
+    width: 85%;
+    text-align: center;
+    font-size: 14px;
+    font-family: Arial;
+
+.login-container{
+    margin: auto !important;
+}
+
+.robot{
+    width: 100% !important;
+    padding-left: 0 !important;
+}
+
+.opciones-roles{
+    padding-left: 0 !important;
+    justify-content: center !important;
+}
+
+.contraseña{
+    margin-right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
 }
