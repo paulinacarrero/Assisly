@@ -25,8 +25,8 @@ form.addEventListener("submit", async (e) => {
         // 🔥 Guardar sesión
         localStorage.setItem("student_id", data.student_id);
 
-const universidadLat = 6.262199039902538;
-const universidadLon = -75.58890295150286;
+const universidadLat = 6.243419058650652, 
+const universidadLon = -75.61222400496764;
 
 const RADIO_PERMITIDO = 100;
 

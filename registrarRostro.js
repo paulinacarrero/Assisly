@@ -60,6 +60,7 @@ async function guardarRostro(imageData) {
 
         console.log(data);
         alert("Rostro guardado correctamente 🎉");
+        window.location.href = "login.html";
 
     } catch (error) {
         console.error(error);

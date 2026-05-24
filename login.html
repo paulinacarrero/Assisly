@@ -60,17 +60,14 @@
     </form>
 
     <p>¿No tienes cuenta? <a href="registro.html">Registrarse</a></p>
-<div id="estado"></div>
-
-
-    
+    <div id="estado"></div>
 </div> 
-<p id="estado" style="margin-top: 15px; color: white;"></p>
+<!-- <p id="estado" style="margin-top: 15px; color: white;"></p> -->
 
-<script>
+<!-- <script>
 
-const universidadLat = 6.262199039902538;
-const universidadLon = -75.58890295150286;
+const universidadLat = 6.243419058650652;
+const universidadLon = -75.61222400496764;
 
 const RADIO_PERMITIDO = 100;
 
@@ -125,6 +122,8 @@ document.querySelector(".btn-login").addEventListener("click", (e) => {
 
             if (distancia <= RADIO_PERMITIDO) {
 
+                
+
                 estado.innerHTML = `
                     ✅ Estás dentro de la universidad
                     <br>
@@ -165,6 +164,105 @@ document.querySelector(".btn-login").addEventListener("click", (e) => {
 
 });
 
+</script> -->
+
+<script>
+
+    const universidadLat = 6.243419058650652;
+const universidadLon = -75.61222400496764;
+
+const RADIO_PERMITIDO = 100;
+
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+
+    const R = 6371e3;
+
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+}
+document.querySelector(".btn-login").addEventListener("click", (e) => {
+
+    e.preventDefault();
+
+    const estado = document.getElementById("estado");
+
+    if (!navigator.geolocation) {
+        estado.innerHTML = "Tu navegador no soporta GPS";
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        (position) => {
+
+            const usuarioLat = position.coords.latitude;
+            const usuarioLon = position.coords.longitude;
+
+            const distancia = calcularDistancia(
+                usuarioLat,
+                usuarioLon,
+                universidadLat,
+                universidadLon
+            );
+
+            if (distancia <= RADIO_PERMITIDO) {
+
+                alert("Asistencia permitida");
+
+                // VERIFICAR ROL SELECCIONADO
+                const rolSeleccionado = document.querySelector('input[name="rol"]:checked').value;
+
+                if (rolSeleccionado === "docente") {
+
+                    window.location.href = "docente.html";
+
+                } else {
+
+                    window.location.href = "codigoQR.html";
+
+                }
+
+            } else {
+
+                estado.innerHTML = `
+                    ❌ Debes estar dentro de la universidad
+                `;
+
+                alert("Acceso bloqueado");
+
+            }
+
+        },
+
+        (error) => {
+
+            console.log(error);
+
+            estado.innerHTML = "Debes permitir ubicación";
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+
+    );
+
+});
 </script>
 
 <script src="login.js"></script>

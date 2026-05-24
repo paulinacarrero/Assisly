@@ -1,19 +1,19 @@
 const form = document.getElementById("registroForm");
-// ─────────────────────────────────────────
-//  registrar.js  –  Assisly Registro
-// ─────────────────────────────────────────
+// // ─────────────────────────────────────────
+// //  registrar.js  –  Assisly Registro
+// // ─────────────────────────────────────────
 
-// ── 1. Mostrar / ocultar contraseña ──────
-document.querySelectorAll('.contraseña').forEach(container => {
-    const icono = container.querySelector('i');
-    const input = container.querySelector('input');
+// // ── 1. Mostrar / ocultar contraseña ──────
+// document.querySelectorAll('.contraseña').forEach(container => {
+//     const icono = container.querySelector('i');
+//     const input = container.querySelector('input');
 
-    icono.addEventListener('click', () => {
-        input.type = input.type === 'password' ? 'text' : 'password';
-        icono.classList.toggle('fa-eye');
-        icono.classList.toggle('fa-eye-slash');
-    });
-});
+//     icono.addEventListener('click', () => {
+//         input.type = input.type === 'password' ? 'text' : 'password';
+//         icono.classList.toggle('fa-eye');
+//         icono.classList.toggle('fa-eye-slash');
+//     });
+// });
 
 // ── 2. Modal de términos y condiciones ───
 document.getElementById('link-terminos').addEventListener('click', function(e) {
@@ -51,10 +51,10 @@ document.getElementById('registroForm').addEventListener('submit', async (e) => 
     }
 
     // Validar contraseñas iguales
-    if (password !== confirmar) {
-        alert('Las contraseñas no coinciden.');
-        return;
-    }
+    if (password !== confirmPassword) {
+    alert('Las contraseñas no coinciden.');
+    return;
+}
 
     // Separar nombre y apellido
     const partes     = nombre.split(' ');
@@ -125,20 +125,20 @@ containers.forEach(container => {
 // });
 
 const linkTerminos = document.getElementById('link-terminos');
-const cuadroLegal = document.getElementById('cuadro-legal');
+
 const checkTerminos = document.getElementById('check-terminos');
 
-linkTerminos.addEventListener('click', function(e) {
-    e.preventDefault(); // Evita que el enlace navegue
+// linkTerminos.addEventListener('click', function(e) {
+//     e.preventDefault(); // Evita que el enlace navegue
 
-    const estaVisible = cuadroLegal.style.display === 'block';
+//     const estaVisible = cuadroLegal.style.display === 'block';
 
-    if (estaVisible) {
-        cuadroLegal.style.display = 'none';
-    } else {
-        cuadroLegal.style.display = 'block';
-    }
-});
+//     if (estaVisible) {
+//         cuadroLegal.style.display = 'none';
+//     } else {
+//         cuadroLegal.style.display = 'block';
+//     }
+// });
 
 // Opcional: cerrar el cuadro si el usuario desmarca el checkbox
 checkTerminos.addEventListener('change', function() {
