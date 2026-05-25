@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assisly - Asistencia</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- 1. Primero llamamos a la librería del QR (Internet necesario) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
@@ -14,17 +15,119 @@
     <h2>¡Registra tu Asistencia!</h2>
     <p>Escanea el código QR para la asistencia a clases</p>
 
-    <!-- Imagen que se quitará al dar clic -->
     <img src="imagenes assisly/QR.png" class="QR" id="qr-decorativo">
-
-    <!-- Contenedor del escáner (inicialmente vacío) -->
-    <div id="reader" style="width: 100%; border-radius: 10px; overflow: hidden;"></div>
+    <div id="reader" style="width:100%; border-radius:10px; overflow:hidden;"></div>
 
     <button type="button" id="btn-scan" class="btn-login">ESCANEAR CÓDIGO QR</button>
 </div>
-    <!-- 2. AQUÍ LLAMAS A TU ARCHIVO JS -->
-    <!-- Asegúrate de que el nombre sea exactamente el mismo -->
-    <script src="codigoQR.js"></script>
 
+<!-- Modal confirmación -->
+<div id="modal-asistencia" style="display:none; position:fixed; inset:0;
+     background:rgba(0,0,0,0.6); z-index:999;">
+    <div style="display:flex; justify-content:center; align-items:center;
+                width:100%; height:100%;">
+        <div style="background:white; border-radius:20px; padding:32px;
+                    max-width:380px; width:90%;
+                    box-shadow:0 10px 40px rgba(0,0,0,0.25); text-align:center;">
+
+            <!-- Check -->
+            <div style="width:72px; height:72px; border-radius:50%;
+                        background:linear-gradient(to right,#b1b7d3,#5344aa);
+                        display:flex; align-items:center; justify-content:center;
+                        margin:0 auto 16px;">
+                <i class="fa-solid fa-check" style="color:white; font-size:34px;"></i>
+            </div>
+
+            <h3 style="font-size:18px; font-weight:700; color:#1e1e2e; margin-bottom:4px;">
+                ¡Registro exitoso, <span id="modal-nombre"></span>! 🎉
+            </h3>
+            <p style="font-size:13px; color:#6b7280; margin-bottom:20px;">
+                Tu asistencia fue registrada correctamente
+            </p>
+
+            <!-- Tarjeta info -->
+            <div style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);
+                        border:1px solid #ddd6fe; border-radius:14px;
+                        padding:18px; margin-bottom:24px; text-align:left;">
+
+                <!-- Materia -->
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <div style="width:36px; height:36px; border-radius:10px; flex-shrink:0;
+                                background:linear-gradient(135deg,#667eea,#764ba2);
+                                display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-book" style="color:white; font-size:14px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:10px; color:#9ca3af; font-weight:600;">MATERIA</div>
+                        <div id="modal-materia" style="font-size:14px; font-weight:700; color:#1e1e2e;"></div>
+                    </div>
+                </div>
+
+                <!-- Docente -->
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <div style="width:36px; height:36px; border-radius:10px; flex-shrink:0;
+                                background:linear-gradient(135deg,#667eea,#764ba2);
+                                display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-chalkboard-user" style="color:white; font-size:14px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:10px; color:#9ca3af; font-weight:600;">DOCENTE</div>
+                        <div id="modal-docente" style="font-size:14px; font-weight:700; color:#1e1e2e;"></div>
+                    </div>
+                </div>
+
+                <!-- Aula -->
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <div style="width:36px; height:36px; border-radius:10px; flex-shrink:0;
+                                background:linear-gradient(135deg,#667eea,#764ba2);
+                                display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-door-open" style="color:white; font-size:14px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:10px; color:#9ca3af; font-weight:600;">AULA</div>
+                        <div id="modal-aula" style="font-size:14px; font-weight:700; color:#1e1e2e;"></div>
+                    </div>
+                </div>
+
+                <!-- Fecha -->
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <div style="width:36px; height:36px; border-radius:10px; flex-shrink:0;
+                                background:linear-gradient(135deg,#667eea,#764ba2);
+                                display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-calendar" style="color:white; font-size:14px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:10px; color:#9ca3af; font-weight:600;">FECHA</div>
+                        <div id="modal-fecha" style="font-size:14px; font-weight:700; color:#1e1e2e;"></div>
+                    </div>
+                </div>
+
+                <!-- Hora -->
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:36px; height:36px; border-radius:10px; flex-shrink:0;
+                                background:linear-gradient(135deg,#667eea,#764ba2);
+                                display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-clock" style="color:white; font-size:14px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:10px; color:#9ca3af; font-weight:600;">HORA</div>
+                        <div id="modal-hora" style="font-size:14px; font-weight:700; color:#1e1e2e;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="button" onclick="cerrarModal()"
+                    style="width:100%; padding:13px; border:none; border-radius:25px;
+                           background:linear-gradient(to right,#b1b7d3,#5344aa);
+                           color:white; font-size:14px; font-weight:700; cursor:pointer;">
+                VER MI PERFIL
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<script src="codigoQR.js"></script>
 </body>
 </html>

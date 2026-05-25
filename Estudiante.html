@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assisly - Perfil Estudiante</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .perfil-container {
+            background: white;
+            border-radius: 25px;
+            padding: 30px 28px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .perfil-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+            border: 1px solid #ddd6fe;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .perfil-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #7c3aed;
+            background: #ede9fe;
+            flex-shrink: 0;
+        }
+
+        .perfil-avatar-placeholder {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .perfil-avatar-placeholder i {
+            color: white;
+            font-size: 28px;
+        }
+
+        .perfil-nombre {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1e1e2e;
+        }
+
+        .perfil-rol {
+            font-size: 12px;
+            color: #7c3aed;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .perfil-badge {
+            margin-left: auto;
+            background: #dcfce7;
+            color: #16a34a;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .perfil-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #16a34a;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .btn-escanear {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(to right, #b1b7d3, #5344aa);
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 28px;
+            transition: transform 0.15s, box-shadow 0.15s;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .btn-escanear:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(83, 68, 170, 0.35);
+        }
+
+        .historial-titulo {
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .historial-titulo i { color: #7c3aed; }
+
+        .historial-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .historial-lista::-webkit-scrollbar { width: 4px; }
+        .historial-lista::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .historial-lista::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 4px; }
+
+        .historial-item {
+            background: #fafafa;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: fadeUp 0.3s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .historial-icono {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .historial-icono i { color: white; font-size: 15px; }
+
+        .historial-materia {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e1e2e;
+        }
+
+        .historial-detalle {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        .historial-hora {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .historial-hora-texto {
+            font-size: 12px;
+            font-weight: 600;
+            color: #7c3aed;
+        }
+
+        .historial-fecha-texto {
+            font-size: 10px;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        .historial-vacio {
+            text-align: center;
+            padding: 30px 0;
+            color: #9ca3af;
+        }
+
+        .historial-vacio i {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: block;
+            color: #c4b5fd;
+        }
+
+        .historial-vacio p { font-size: 13px; }
+
+        .cerrar-sesion {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .cerrar-sesion a {
+            font-size: 13px;
+            color: #9ca3af;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .cerrar-sesion a:hover { color: #ef4444; }
+    </style>
+</head>
+<body>
+
+<div class="perfil-container">
+
+    <!-- Logo -->
+    <div style="text-align:center; margin-bottom:20px;">
+        <img src="imagenes assisly/logo.png" class="logo">
+    </div>
+
+    <!-- Header perfil -->
+    <div class="perfil-header">
+        <div class="perfil-avatar-placeholder" id="avatar-placeholder">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <img id="foto-perfil" class="perfil-avatar" style="display:none;">
+        <div>
+            <div class="perfil-nombre" id="perfil-nombre">Cargando...</div>
+            <div class="perfil-rol">Estudiante</div>
+        </div>
+        <span class="perfil-badge">
+            <span class="dot"></span>
+            Activo
+        </span>
+    </div>
+
+    <!-- Botón escanear QR -->
+    <a href="codigoQR.html" class="btn-escanear">
+        <i class="fa-solid fa-qrcode"></i>
+        ESCANEAR CÓDIGO QR
+    </a>
+
+    <!-- Historial -->
+    <div class="historial-titulo">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        Historial de Asistencias
+    </div>
+
+    <div class="historial-lista" id="historial-lista"></div>
+
+    <!-- Cerrar sesión -->
+    <div class="cerrar-sesion">
+        <a href="login.html" onclick="cerrarSesion()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Cerrar sesión
+        </a>
+    </div>
+
+</div>
+
+<script src="estudiante.js"></script>
+</body>
+</html>
