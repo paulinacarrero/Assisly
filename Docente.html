@@ -5,70 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assisly - Panel Docente</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("imagenes assisly/fondo.png");
-    background-size: cover;
-    background-position: center;
-    font-family: 'Poppins', sans-serif;
-}
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 16px;
+            background-image: url("imagenes assisly/fondo.png");
+            background-size: cover;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+        }
 
         .panel-container {
             background: #fff;
             border-radius: 24px;
             padding: 36px 32px;
             width: 100%;
-            max-width: 500px;
+            max-width: 560px;
             box-shadow: 0 20px 60px rgba(102, 51, 153, 0.25);
-            position: relative;
-            z-index: 1;
             animation: fadeUp 0.5s ease;
         }
+        @media (max-width: 480px) { .panel-container { padding: 28px 18px; } }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        .header { text-align: center; margin-bottom: 28px; }
-        .logo { height: 70px; margin-bottom: 8px; }
+        .header { text-align: center; margin-bottom: 24px; }
+        .logo { height: 70px; margin: 0 auto 8px; display: block; }
 
         .badge-docente {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            display: inline-flex; align-items: center; gap: 6px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 14px;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
+            color: #fff; font-size: 12px; font-weight: 600;
+            padding: 4px 14px; border-radius: 20px;
+            letter-spacing: 0.5px; margin-bottom: 12px;
         }
-
         .header h2 { font-size: 22px; font-weight: 700; color: #1e1e2e; }
         .header p  { font-size: 14px; color: #6b7280; margin-top: 4px; }
 
         .docente-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            display: flex; align-items: center; gap: 12px;
             background: linear-gradient(135deg, #f5f3ff, #ede9fe);
-            border-radius: 14px;
-            padding: 14px 16px;
-            margin-bottom: 24px;
+            border-radius: 14px; padding: 14px 16px; margin-bottom: 24px;
             border: 1px solid #ddd6fe;
         }
-
         .avatar {
             width: 46px; height: 46px;
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -76,123 +64,8 @@
             display: flex; align-items: center; justify-content: center;
             color: white; font-size: 18px; flex-shrink: 0;
         }
-
         .docente-nombre { font-weight: 700; font-size: 15px; color: #1e1e2e; }
         .docente-cargo  { font-size: 12px; color: #7c3aed; font-weight: 500; }
-
-        .seccion-label {
-            font-size: 13px; font-weight: 600; color: #374151;
-            margin-bottom: 8px;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .seccion-label i { color: #7c3aed; }
-
-        select, input[type="text"] {
-            width: 100%;
-            padding: 13px 16px;
-            border: 1.5px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 14px;
-            color: #374151;
-            background: #fafafa;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            margin-bottom: 16px;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237c3aed' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            cursor: pointer;
-        }
-
-        select:focus, input[type="text"]:focus {
-            border-color: #7c3aed;
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-            background: #fff;
-        }
-
-        .btn-generar {
-            width: 100%; padding: 14px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; border: none; border-radius: 14px;
-            font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            margin-top: 4px;
-        }
-        .btn-generar:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(118,75,162,0.35); }
-        .btn-generar:active { transform: translateY(0); }
-
-        .qr-panel { display: none; margin-top: 28px; text-align: center; animation: fadeUp 0.4s ease; }
-        .qr-panel.visible { display: block; }
-
-        .qr-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-        .qr-divider::before, .qr-divider::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
-        .qr-divider span { font-size: 12px; color: #9ca3af; font-weight: 500; white-space: nowrap; }
-
-        .qr-info-card {
-            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
-            border: 1px solid #ddd6fe;
-            border-radius: 16px; padding: 20px; margin-bottom: 16px;
-        }
-
-        .qr-titulo-clase { font-size: 16px; font-weight: 700; color: #1e1e2e; margin-bottom: 4px; }
-        .qr-detalle      { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
-
-        .qr-wrapper {
-            display: inline-block; background: white;
-            padding: 14px; border-radius: 14px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        }
-        #qrcode canvas, #qrcode img { display: block; }
-
-        .timer-container {
-            display: flex; align-items: center; justify-content: center;
-            gap: 8px; margin-top: 14px;
-        }
-
-        .timer-circle { width: 54px; height: 54px; position: relative; }
-        .timer-circle svg { transform: rotate(-90deg); }
-        .timer-circle .track  { fill: none; stroke: #e5e7eb; stroke-width: 4; }
-        .timer-circle .progress {
-            fill: none; stroke: #7c3aed; stroke-width: 4;
-            stroke-linecap: round;
-            stroke-dasharray: 113; stroke-dashoffset: 0;
-            transition: stroke-dashoffset 1s linear;
-        }
-        .timer-num {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: 700; color: #7c3aed;
-        }
-        .timer-texto { font-size: 13px; color: #6b7280; }
-        .timer-texto strong { color: #7c3aed; }
-
-        .acciones-qr { display: flex; gap: 10px; margin-top: 16px; }
-
-        .btn-accion {
-            flex: 1; padding: 11px; border-radius: 12px;
-            border: 1.5px solid #e5e7eb; background: white;
-            font-size: 13px; font-weight: 600; color: #374151;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            transition: all 0.2s;
-        }
-        .btn-accion:hover        { border-color: #7c3aed; color: #7c3aed; background: #f5f3ff; }
-        .btn-accion.peligro:hover{ border-color: #ef4444; color: #ef4444; background: #fef2f2; }
-
-        .cerrar-sesion { margin-top: 24px; text-align: center; }
-        .cerrar-sesion a {
-            font-size: 13px; color: #9ca3af; text-decoration: none;
-            display: inline-flex; align-items: center; gap: 5px;
-            transition: color 0.2s;
-        }
-        .cerrar-sesion a:hover { color: #ef4444; }
 
         .estado-badge {
             display: inline-flex; align-items: center; gap: 5px;
@@ -204,11 +77,204 @@
             width: 6px; height: 6px; border-radius: 50%;
             background: currentColor; animation: pulse 1.5s infinite;
         }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50%       { opacity: 0.3; }
+        .seccion-label {
+            font-size: 13px; font-weight: 600; color: #374151;
+            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 6px;
         }
+        .seccion-label i { color: #7c3aed; }
+
+        .vista { display: none; }
+        .vista.visible { display: block; animation: fadeUp 0.3s ease; }
+
+        /* ── Lista de materias ── */
+        .materias-lista { display: flex; flex-direction: column; gap: 10px; }
+
+        .materia-card {
+            width: 100%; text-align: left;
+            display: flex; align-items: center; gap: 14px;
+            padding: 14px 16px;
+            border: 1.5px solid #e5e7eb; border-radius: 14px;
+            background: #fafafa; cursor: pointer;
+            font-family: inherit;
+            transition: border-color 0.2s, background 0.2s, transform 0.15s;
+        }
+        .materia-card:hover { border-color: #7c3aed; background: #f5f3ff; transform: translateY(-1px); }
+
+        .materia-icono {
+            width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 16px;
+        }
+        .materia-texto { flex: 1; min-width: 0; }
+        .materia-nombre { font-size: 15px; font-weight: 700; color: #1e1e2e; }
+        .materia-detalle {
+            font-size: 12px; color: #6b7280; margin-top: 2px;
+            display: flex; flex-wrap: wrap; gap: 4px 12px;
+        }
+        .materia-detalle i { color: #7c3aed; margin-right: 3px; }
+        .materia-card .fa-chevron-right { color: #9ca3af; }
+
+        .mensaje-vacio {
+            text-align: center; padding: 28px 12px;
+            color: #9ca3af; font-size: 14px;
+        }
+        .mensaje-vacio i { font-size: 30px; display: block; margin-bottom: 8px; }
+        .mensaje-vacio.error { color: #ef4444; }
+
+        /* ── Detalle de materia ── */
+        .btn-volver {
+            background: none; border: none; cursor: pointer;
+            font-family: inherit; font-size: 13px; font-weight: 600; color: #7c3aed;
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-bottom: 14px; padding: 0;
+        }
+        .materia-header {
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+            border: 1px solid #ddd6fe; border-radius: 16px;
+            padding: 16px 18px; margin-bottom: 20px;
+        }
+        .materia-header h3 { font-size: 18px; color: #1e1e2e; }
+
+        .btn-generar {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; border-radius: 14px;
+            font-family: inherit; font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-generar:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(118,75,162,0.35); }
+        .btn-generar:disabled { opacity: 0.6; cursor: wait; transform: none; box-shadow: none; }
+
+        .qr-panel { display: none; margin-top: 4px; text-align: center; }
+        .qr-panel.visible { display: block; animation: fadeUp 0.4s ease; }
+
+        .qr-info-card {
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+            border: 1px solid #ddd6fe;
+            border-radius: 16px; padding: 20px; margin-bottom: 14px;
+        }
+        .qr-wrapper {
+            display: inline-block; background: white;
+            padding: 14px; border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        #qrcode canvas, #qrcode img { display: block; max-width: 100%; height: auto; }
+
+        .qr-estado {
+            width: 220px; height: 220px; max-width: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #fef2f2; border-radius: 8px; gap: 8px; text-align: center;
+        }
+        .qr-estado i { font-size: 36px; color: #ef4444; }
+        .qr-estado span { font-size: 13px; color: #ef4444; font-weight: 600; }
+        .qr-estado small { font-size: 11px; color: #9ca3af; }
+
+        .timer-container {
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px; margin-top: 14px;
+        }
+        .timer-circle { width: 54px; height: 54px; position: relative; }
+        .timer-circle svg { transform: rotate(-90deg); }
+        .timer-circle .track  { fill: none; stroke: #e5e7eb; stroke-width: 4; }
+        .timer-circle .progress {
+            fill: none; stroke: #7c3aed; stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 113.1; stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+        .timer-num {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; color: #7c3aed;
+        }
+        .timer-texto { font-size: 13px; color: #6b7280; }
+        .timer-texto strong { color: #7c3aed; }
+
+        .acciones-qr { display: flex; gap: 10px; }
+        .btn-accion {
+            flex: 1; padding: 11px; border-radius: 12px;
+            border: 1.5px solid #e5e7eb; background: white;
+            font-family: inherit; font-size: 13px; font-weight: 600; color: #374151;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-accion:hover         { border-color: #7c3aed; color: #7c3aed; background: #f5f3ff; }
+        .btn-accion.peligro:hover { border-color: #ef4444; color: #ef4444; background: #fef2f2; }
+
+        /* ── Asistencia ── */
+        .asistencia { margin-top: 28px; }
+        .asistencia-top {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
+        }
+        .asistencia-top .seccion-label { margin-bottom: 0; }
+
+        input[type="date"] {
+            padding: 9px 12px;
+            border: 1.5px solid #e5e7eb; border-radius: 12px;
+            font-family: inherit; font-size: 13px; color: #374151;
+            background: #fafafa; outline: none;
+        }
+        input[type="date"]:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+
+        .resumen { display: flex; gap: 10px; margin-bottom: 12px; }
+        .resumen-item {
+            flex: 1; border-radius: 12px; padding: 10px 12px;
+            font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .resumen-item strong { font-size: 20px; }
+        .resumen-item.si { background: #dcfce7; color: #15803d; }
+        .resumen-item.no { background: #fee2e2; color: #b91c1c; }
+
+        .aviso-sin-clase {
+            font-size: 12px; color: #92400e; background: #fef3c7;
+            border-radius: 10px; padding: 8px 12px; margin-bottom: 12px;
+            display: flex; gap: 6px; align-items: center;
+        }
+        .aviso-sin-clase[hidden] { display: none; }
+
+        .estudiantes-lista { display: flex; flex-direction: column; gap: 8px; }
+        .estudiante-fila {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; border-radius: 12px;
+            border: 1px solid #f0f0f3; background: #fafafa;
+        }
+        .estudiante-avatar {
+            width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: #fff;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .estudiante-texto { flex: 1; min-width: 0; }
+        .estudiante-nombre { font-size: 14px; font-weight: 600; color: #1e1e2e; }
+        .estudiante-email {
+            font-size: 11px; color: #9ca3af;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .estado-asistencia {
+            font-size: 12px; font-weight: 700; white-space: nowrap;
+            padding: 4px 10px; border-radius: 20px;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .estado-asistencia.si { background: #dcfce7; color: #15803d; }
+        .estado-asistencia.no { background: #fee2e2; color: #b91c1c; }
+        .estado-hora { display: block; font-size: 10px; color: #9ca3af; text-align: right; margin-top: 3px; }
+
+        .cerrar-sesion { margin-top: 28px; text-align: center; }
+        .cerrar-sesion a {
+            font-size: 13px; color: #9ca3af; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 5px;
+            transition: color 0.2s;
+        }
+        .cerrar-sesion a:hover { color: #ef4444; }
     </style>
 </head>
 <body>
@@ -216,90 +282,96 @@
 <div class="panel-container">
 
     <div class="header">
-    <img src="imagenes assisly/logo.png" class="logo">
+        <img src="imagenes assisly/logo.png" class="logo" alt="Assisly">
         <div class="badge-docente">
             <i class="fa-solid fa-chalkboard-user"></i>
             Panel Docente
         </div>
         <h2>Gestión de Asistencia</h2>
-        <p>Genera el código QR para tu clase</p>
+        <p id="header-subtitulo">Selecciona una de tus materias</p>
     </div>
 
     <div class="docente-info">
-        <div class="avatar">
-            <i class="fa-solid fa-user-tie"></i>
-        </div>
+        <div class="avatar"><i class="fa-solid fa-user-tie"></i></div>
         <div>
             <div class="docente-nombre" id="nombre-docente">Cargando...</div>
-            <div class="docente-cargo">Docente / Administrativo</div>
+            <div class="docente-cargo">Docente</div>
         </div>
-        <span class="estado-badge activo">
-            <span class="dot"></span>
-            En línea
-        </span>
+        <span class="estado-badge activo"><span class="dot"></span> En línea</span>
     </div>
 
-    <div>
-    <p class="seccion-label"><i class="fa-solid fa-book"></i> Materia / Clase</p>
-<select id="materia">
-    <option value="" disabled selected>Selecciona la materia</option>
-    <option value="Ingenieria de Software 1">Ingenieria de Software 1</option>
-    <option value="Ingenieria de Software 2">Ingenieria de Software 2</option>
-    <option value="Base de Datos">Base de Datos</option>
-    <option value="Telecomunicaciones">Telecomunicaciones</option>
-</select>
+    <!-- ── Vista 1: materias del docente ── -->
+    <section class="vista visible" id="vista-materias">
+        <p class="seccion-label"><i class="fa-solid fa-book"></i> Mis materias</p>
+        <div class="materias-lista" id="materias-lista">
+            <div class="mensaje-vacio"><i class="fa-solid fa-spinner fa-spin"></i> Cargando materias...</div>
+        </div>
+    </section>
 
-        <p class="seccion-label"><i class="fa-solid fa-clock"></i> Hora de clase</p>
-        <input type="text" id="hora" placeholder="Ej: 8:00 AM">
+    <!-- ── Vista 2: detalle de una materia ── -->
+    <section class="vista" id="vista-materia">
+        <button class="btn-volver" onclick="volverAMaterias()">
+            <i class="fa-solid fa-arrow-left"></i> Mis materias
+        </button>
 
-        <p class="seccion-label"><i class="fa-solid fa-map-marker-alt"></i> Aula / Salón</p>
-        <input type="text" id="aula" placeholder="Ej: Salón 201">
+        <div class="materia-header">
+            <h3 id="materia-titulo">—</h3>
+            <div class="materia-detalle" id="materia-detalle"></div>
+        </div>
 
-        <button class="btn-generar" onclick="generarQR()">
+        <button class="btn-generar" id="btn-generar" onclick="generarQR()">
             <i class="fa-solid fa-qrcode"></i>
             GENERAR CÓDIGO QR
         </button>
-    </div>
 
-    <div class="qr-panel" id="qr-panel">
-        <div class="qr-divider"><span>Código QR generado</span></div>
+        <div class="qr-panel" id="qr-panel">
+            <div class="qr-info-card">
+                <div class="qr-wrapper"><div id="qrcode"></div></div>
 
-        <div class="qr-info-card">
-            <div class="qr-titulo-clase" id="qr-clase-titulo">—</div>
-            <div class="qr-detalle" id="qr-clase-detalle">—</div>
-
-            <div class="qr-wrapper">
-                <div id="qrcode"></div>
+                <div class="timer-container" id="timer-container">
+                    <div class="timer-circle">
+                        <svg width="54" height="54" viewBox="0 0 42 42">
+                            <circle class="track" cx="21" cy="21" r="18"/>
+                            <circle class="progress" id="timer-arc" cx="21" cy="21" r="18"/>
+                        </svg>
+                        <div class="timer-num" id="timer-num">2:00</div>
+                    </div>
+                    <div class="timer-texto">El QR expira en <strong id="timer-texto">2:00</strong></div>
+                </div>
             </div>
 
-            <div class="timer-container">
-                <div class="timer-circle">
-                    <svg width="54" height="54" viewBox="0 0 42 42">
-                        <circle class="track" cx="21" cy="21" r="18"/>
-                        <circle class="progress" id="timer-arc" cx="21" cy="21" r="18"/>
-                    </svg>
-                    <div class="timer-num" id="timer-num">2:00</div>
-                </div>
-                <div class="timer-texto">
-                    El QR expira en <strong id="timer-texto">2:00</strong>
-                </div>
+            <div class="acciones-qr">
+                <button class="btn-accion" onclick="generarQR()">
+                    <i class="fa-solid fa-rotate"></i> Renovar QR
+                </button>
+                <button class="btn-accion peligro" onclick="cerrarClase()">
+                    <i class="fa-solid fa-stop-circle"></i> Cerrar clase
+                </button>
             </div>
         </div>
 
-        <div class="acciones-qr">
-            <button class="btn-accion" onclick="regenerarQR()">
-                <i class="fa-solid fa-rotate"></i>
-                Renovar QR
-            </button>
-            <button class="btn-accion peligro" onclick="cerrarQR()">
-                <i class="fa-solid fa-stop-circle"></i>
-                Cerrar clase
-            </button>
+        <div class="asistencia">
+            <div class="asistencia-top">
+                <p class="seccion-label"><i class="fa-solid fa-list-check"></i> Asistencia</p>
+                <input type="date" id="fecha-asistencia" onchange="cargarAsistencia()">
+            </div>
+
+            <div class="resumen">
+                <div class="resumen-item si"><strong id="total-si">0</strong> Asistieron</div>
+                <div class="resumen-item no"><strong id="total-no">0</strong> No asistieron</div>
+            </div>
+
+            <div class="aviso-sin-clase" id="aviso-sin-clase" hidden>
+                <i class="fa-solid fa-circle-info"></i>
+                No se generó QR para esta materia en la fecha seleccionada.
+            </div>
+
+            <div class="estudiantes-lista" id="estudiantes-lista"></div>
         </div>
-    </div>
+    </section>
 
     <div class="cerrar-sesion">
-        <a href="login.html">
+        <a href="login.html" onclick="cerrarSesionDocente()">
             <i class="fa-solid fa-right-from-bracket"></i>
             Cerrar sesión
         </a>
@@ -307,7 +379,7 @@
 
 </div>
 
-<script src="docente.js"></script>
+<script src="Docente.js"></script>
 
 </body>
 </html>

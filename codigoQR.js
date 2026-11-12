@@ -26,20 +26,18 @@ btnScan.addEventListener('click', () => {
         config,
         (decodedText) => {
             html5QrCode.stop().then(() => {
+                let datos;
                 try {
-                    const datos = JSON.parse(decodedText);
-
-                    // Guardar datos del QR para usarlos después
-                    localStorage.setItem('qr_datos', JSON.stringify(datos));
-                    localStorage.setItem('qr_timestamp', new Date().toISOString());
-
-                    // Mostrar modal con la info de la clase
-                    mostrarConfirmacion(datos);
-
-                } catch(e) {
+                    datos = JSON.parse(decodedText);
+                } catch (e) {
+                    datos = null;
+                }
+                if (!datos || !datos.session_id || !datos.token) {
                     resetEscaner();
                     alert('QR no válido. Escanea el código de tu docente.');
+                    return;
                 }
+                registrarAsistencia(datos);
             }).catch(() => resetEscaner());
         },
         () => {} // errores de lectura continuos, ignorar
@@ -50,6 +48,50 @@ btnScan.addEventListener('click', () => {
     });
 });
 
+// ── Enviar la asistencia al backend ─────
+async function registrarAsistencia(datos) {
+    const studentId = localStorage.getItem('student_id');
+    if (!studentId) {
+        alert('Debes iniciar sesión como estudiante para registrar tu asistencia.');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    try {
+        const res = await fetch('http://localhost:3000/attendance/scan', {
+            method : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body   : JSON.stringify({
+                student_id: studentId,
+                session_id: datos.session_id,
+                token     : datos.token
+            })
+        });
+        const respuesta = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+            resetEscaner();
+            alert(respuesta.error || 'No se pudo registrar la asistencia.');
+            return;
+        }
+
+        // Datos confirmados por el servidor
+        const clase = {
+            materia: respuesta.materia || datos.materia,
+            aula   : respuesta.aula    || datos.aula,
+            docente: respuesta.docente || datos.docente
+        };
+        localStorage.setItem('qr_datos', JSON.stringify(clase));
+        localStorage.setItem('qr_timestamp', new Date().toISOString());
+        mostrarConfirmacion(clase, respuesta.ya_registrada);
+
+    } catch (err) {
+        console.error(err);
+        resetEscaner();
+        alert('Error conectando con el servidor.');
+    }
+}
+
 function resetEscaner() {
     escaneando = false;
     btnScan.textContent = 'ESCANEAR CÓDIGO QR';
@@ -57,7 +99,7 @@ function resetEscaner() {
     if (qrDecorativo) qrDecorativo.style.display = 'block';
 }
 
-function mostrarConfirmacion(datos) {
+function mostrarConfirmacion(datos, yaRegistrada = false) {
     const ahora = new Date();
 
     const fecha = ahora.toLocaleDateString('es-CO', {
@@ -74,17 +116,19 @@ function mostrarConfirmacion(datos) {
         hour12: true
     });
 
-    // Guardar en historial
-    const historial = JSON.parse(localStorage.getItem('historial_asistencias') || '[]');
-    historial.push({
-        materia  : datos.materia  || '—',
-        aula     : datos.aula     || '—',
-        docente  : datos.docente  || '—',
-        fecha    : fechaFormateada,
-        hora     : hora,
-        timestamp: ahora.toISOString()
-    });
-    localStorage.setItem('historial_asistencias', JSON.stringify(historial));
+    // Guardar en historial (solo la primera vez que se registra)
+    if (!yaRegistrada) {
+        const historial = JSON.parse(localStorage.getItem('historial_asistencias') || '[]');
+        historial.push({
+            materia  : datos.materia  || '—',
+            aula     : datos.aula     || '—',
+            docente  : datos.docente  || '—',
+            fecha    : fechaFormateada,
+            hora     : hora,
+            timestamp: ahora.toISOString()
+        });
+        localStorage.setItem('historial_asistencias', JSON.stringify(historial));
+    }
 
     // Llenar modal
     const nombre = localStorage.getItem('nombre') || 'Estudiante';
@@ -94,11 +138,15 @@ function mostrarConfirmacion(datos) {
     document.getElementById('modal-aula').textContent    = datos.aula    || '—';
     document.getElementById('modal-fecha').textContent   = fechaFormateada;
     document.getElementById('modal-hora').textContent    = hora;
+    if (yaRegistrada) {
+        document.getElementById('modal-subtitulo').textContent =
+            'Tu asistencia ya estaba registrada para esta clase';
+    }
 
     document.getElementById('modal-asistencia').style.display = 'block';
 }
 
 function cerrarModal() {
     document.getElementById('modal-asistencia').style.display = 'none';
-    window.location.href = 'estudiante.html';
+    window.location.href = 'Estudiante.html';
 }

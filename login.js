@@ -9,12 +9,13 @@ form.addEventListener("submit", async (e) => {
 
     const email    = document.querySelector('input[name="email"]').value;
     const password = document.querySelector('input[name="password"]').value;
+    const rol      = document.querySelector('input[name="rol"]:checked').value;
 
     try {
         const res = await fetch("http://localhost:3000/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password, rol })
         });
 
         const data = await res.json();
@@ -24,19 +25,16 @@ form.addEventListener("submit", async (e) => {
             return;
         }
 
-        // Guardar sesión — nombre completo para docente y estudiante
-        localStorage.setItem("student_id", data.student_id);
-        localStorage.setItem("nombre",
-            data.nombre ||
-            (data.first_name && data.last_name ? data.first_name + " " + data.last_name : null) ||
-            data.first_name ||
-            data.name ||
-            ""
-        );
+        // Guardar sesión (sin mezclar datos de un login anterior)
+        ["student_id", "teacher_id", "rol", "nombre"].forEach(k => localStorage.removeItem(k));
+        localStorage.setItem("rol", data.rol);
+        localStorage.setItem("nombre", data.nombre || "");
+        if (data.rol === "docente") localStorage.setItem("teacher_id", data.teacher_id);
+        else                        localStorage.setItem("student_id", data.student_id);
 
         // Geolocalización de tu compañera — sin cambios
-        const universidadLat = 6.243419058650652;
-        const universidadLon = -75.61222400496764;
+        const universidadLat = 6.2622265956705805;
+        const universidadLon = -75.58902415099524;
         const RADIO_PERMITIDO = 100;
 
         function calcularDistancia(lat1, lon1, lat2, lon2) {
@@ -70,9 +68,7 @@ form.addEventListener("submit", async (e) => {
                 if (distancia <= RADIO_PERMITIDO) {
                     alert("📍 Estás dentro de la universidad");
 
-                    const rol = document.querySelector('input[name="rol"]:checked').value;
-
-                    if (rol === "docente") {
+                    if (data.rol === "docente") {
                         window.location.href = "Docente.html";
                     } else {
                         window.location.href = "codigoQR.html";
